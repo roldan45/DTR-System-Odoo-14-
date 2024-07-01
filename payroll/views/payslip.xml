@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record id="tree_payroll_process" model="ir.ui.view">
+    <field name="name">tree_payroll_process</field>
+    <field name="model">payroll.process</field>
+    <field name="arch" type="xml">
+        <tree string="Paycode" sample="1">
+            <field name="name" required="1"/>
+            <field name="date_from" required="1"/>
+            <field name="date_to" required="1"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="form_payroll_process" model="ir.ui.view">
+    <field name="name">form_payroll_process</field>
+    <field name="model">payroll.process</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet sample="1">
+                <group>
+                    <field name="name" required="1"/>
+                    <field name="date_from" required="1"/>
+                    <field name="date_to" required="1"/>
+                    <field name="state"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="search_payroll_process" model="ir.ui.view">
+    <field name="name">search_payroll_process</field>
+    <field name="model">payroll.process</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+        </search>
+    </field>
+</record>
+
+<record id="action_payroll_process" model="ir.actions.act_window">
+    <field name="name">action_payroll_process</field>
+    <field name="res_model">payroll.process</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="search_payroll_process"/>
+    <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">No data found. Let's create one!</p>
+        <p>Please call your Helpdesk Administrator for updates.</p>
+    </field>
+</record>
+
+<!-- _____________________________________________________________ -->
+
+<record id="tree_payroll_payslip" model="ir.ui.view">
+    <field name="name">tree_payroll_payslip</field>
+    <field name="model">payroll.payslip</field>
+    <field name="arch" type="xml">
+        <tree string="Payroll" sample="1">
+            <field name="employee_id"/>
+            <field name="payroll_period_id"/>
+            <field name="gross_pay"/>
+            <field name="deductions"/>
+            <field name="net_pay"/>
+            <field name="basic_salary"/>
+            <field name="overtime_hours"/>
+        </tree>
+    </field>
+</record>
+
+
+<record id="form_payroll_payslip" model="ir.ui.view">
+    <field name="name">form_payroll_payslip</field>
+    <field name="model">payroll.payslip</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet sample="1">
+                <group>
+                    <field name="employee_id"/>
+                    <field name="payroll_period_id"/>
+                    <field name="gross_pay"/>
+                    <field name="deductions"/>
+                    <field name="net_pay"/>
+                    <field name="basic_salary"/>
+                    <field name="overtime_hours"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="search_payroll_payslip" model="ir.ui.view">
+    <field name="name">search_payroll_payslip</field>
+    <field name="model">payroll.payslip</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="employee_id"/>
+            <field name="payroll_period_id"/>
+        </search>
+    </field>
+</record>
+
+<record id="action_payroll_payslip" model="ir.actions.act_window">
+    <field name="name">action_payroll_payslip</field>
+    <field name="res_model">payroll.payslip</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="search_payroll_payslip"/>
+    <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">No data found. Let's create one!</p>
+        <p>Please call your Helpdesk Administrator for updates.</p>
+    </field>
+</record>
+</odoo>

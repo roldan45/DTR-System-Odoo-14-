@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!-- tree_attendance_employee -->
+    <record id="tree_attendance_employee" model="ir.ui.view">
+		<field name="name">tree_attendance_employee</field>
+		<field name="model">attendance.employee</field>
+		<field name="arch" type="xml">
+			<tree sample="1">
+				<field name="name"/>
+				<field name="emp_bio_id"/>
+				<field name="total_regular_hours"/>
+				<field name="total_overtime_hours"/>
+				<field name="total_late_hours"/>
+				<field name="total_offset_hours"/>
+				<field name="total_vacation_leave_hours"/>
+				<field name="total_sick_leave_hours"/>
+				<field name="total_leave_w_o_pay_hours"/>
+				<field name="total_absent_hours"/>
+				<field name="total_undertime_hours"/>
+				<field name="is_verified"/>
+			</tree>
+		</field>
+	</record>
+
+		<!-- form_attendance_employee -->
+	<record id="form_attendance_employee" model="ir.ui.view">
+		<field name="name">form_attendance_employee</field>
+		<field name="model">attendance.employee</field>
+		<field name="arch" type="xml">
+			<form string="Employee" sample="1">
+				<header>
+					<button name="action_verify_all" string="Verified All" type="object" class="oe_highlight" attrs="{'invisible': [('all_verified', '=', True)]}"/>
+					<button name="action_unverify_all" string="Unverify All" type="object" class="oe_highlight" attrs="{'invisible': [('all_verified', '=', False)]}"/>
+				</header>
+				<sheet>
+					<div style="padding-top: 20px;">
+                        <button name="refresh_data" type="object" string="Refresh"/>
+                    </div>
+					<h1>Employee Name: 
+						<field name="name" readonly="1"/>
+					</h1>
+					<h3>Biometric ID:
+						<field name="emp_bio_id" readonly="1"/>
+					</h3>
+					<h3>
+						<field name="paycode_id" readonly="1"/>
+					</h3>
+					<group>
+						<group string="Total Hours">
+							<field name="total_regular_hours" readonly="1" sum="total"/>
+							<field name="total_overtime_hours" readonly="1" sum="total" />
+							<field name="total_late_hours" readonly="1" sum="total" />
+							<field name="total_offset_hours" readonly="1"  sum="total"/>
+							<field name="total_absent_hours" readonly="1" sum="total" />
+							<field name="total_undertime_hours" readonly="1"  sum="total"/>
+						</group>
+						<group string="Leaves">
+							<field name="total_vacation_leave_hours" readonly="1" sum="total" />
+							<field name="total_sick_leave_hours" readonly="1" sum="total" />
+							<field name="total_leave_w_o_pay_hours" readonly="1" sum="total" />
+						</group>
+					</group>
+					<group>
+						<field name="all_verified" invisible="1"/>
+					</group>
+						<div>
+							<field name="dtr_line_ids" force_save="1" options="{'create': false}" target="current" string="sffad">
+								<tree editable="bottom" default_order='att_date'>
+									<field name="att_date" readonly="1"/>
+									<field name="time_in" readonly="1"/>
+									<field name="time_out" readonly="1"/>
+									<field name="total_hours" readonly="1" sum="total"/>
+									<field name="late_tardiness" readonly="1" sum="total"/>
+									<field name="undertime" readonly="1" sum="total"/>
+									<field name="ot_hours" readonly="1" sum="total"/>
+									<field name="offset_hours" readonly="1" sum="total"/>
+									<field name="vacation_leave" readonly="1" sum="total"/>
+									<field name="sick_leave" readonly="1" sum="total"/>
+									<field name="bday_leave" readonly="1" sum="total"/>
+									<field name="leave_wo_pay" readonly="1" sum="total"/>
+									<field name="absent" readonly="1" sum="total"/>
+									<field name="remarks"/>
+									<field name="is_verified" widget="boolean_toggle"/>
+								</tree>
+							</field>
+						</div>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+	<!-- search_attendance_employee -->
+	<record id="search_attendance_employee" model="ir.ui.view">
+		<field name="name">search_attendance_employee</field>
+		<field name="model">attendance.employee</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name"/>
+			</search>
+			
+		</field>
+	</record>
+
+	<!-- action_attendance_employee -->
+	<record id='action_attendance_employee' model='ir.actions.act_window'>
+		<field name="name">Employee DTR</field>
+		<field name="res_model">attendance.employee</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="search_attendance_employee"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				No Data found. Let's create one!
+			</p><p>
+				Please call your Helpdesk Administrator for updates.
+			</p>
+		</field>
+	</record>
+</odoo>

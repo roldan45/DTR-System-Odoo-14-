@@ -1,0 +1,201 @@
+<!-- View for Employee Attendance Summary -->
+<odoo>
+    <data>
+        <record id="employee_attendance_summary_kanban" model="ir.ui.view">
+            <field name="name">employee_attendance_summary_kanban</field>
+            <field name="model">attendance.employee.summary</field>
+            <field name="arch" type="xml">
+                <kanban create="1" default_order="name asc" sample="1">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click"  t-attf-style="box-shadow: 12px 12px 17px 0 rgba(0,0,0,3); background-color: #faf9ca; border-radius: 10px;">
+                                <div>
+                                    <div class="o_kanban_card_header" style="border-bottom: 2px solid black;">
+                                        <div  class="o_primary">
+                                            <strong>
+                                                <span>NAME:
+                                                    <field name="name"/>
+                                                </span>
+                                            </strong>
+                                        </div>
+                                        <div>
+                                            <span>
+                                                <small>
+                                                    <i class="fa fa-dashboard" role="img"/>
+                                                </small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <strong>Late:</strong>
+                                        </div>
+                                        <div >
+                                            <span class="float-right">
+                                                <field name="total_late_hours_per_year"/>
+                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <strong>Offset left:</strong>
+                                        </div>
+                                        <div >
+                                            <span class="float-right">
+                                                <field name="remaining_offset"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <strong>Vacation left:</strong>
+                                        </div>
+                                        <div >
+                                            <span class="float-right">
+                                                <field name="remaining_vacation_leave"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <strong>Sick left:</strong>
+                                        </div>
+                                        <div >
+                                            <span class="float-right">
+                                                <field name="remaining_sick_leave"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <strong>Total Absent:</strong>
+                                        </div>
+                                        <div >
+                                            <span class="float-right">
+                                                <field name="total_absent"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+                    
+
+        <!-- Tree view for Employee Attendance Summary -->
+        <record id="employee_attendance_summary_tree" model="ir.ui.view">
+            <field name="name">employee_attendance_summary_tree</field>
+            <field name="model">attendance.employee.summary</field>
+            <field name="arch" type="xml">
+                <tree sample="1">
+                    <field name="name"/>
+                    <field name="total_regular_hours_per_year"/>
+                    <field name="total_overtime_hours_per_year"/>
+                    <field name="total_late_hours_per_year"/>
+                    <field name="total_offset_hours_per_year"/>
+                    <field name="total_vacation_leave_hours_per_year"/>
+                    <field name="total_sick_leave_hours_per_year"/>
+                    <field name="total_leave_w_o_pay_hours_per_year"/>
+                    <field name="total_absent"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form view for Employee Attendance Summary -->
+        <record id="employee_attendance_summary_form" model="ir.ui.view">
+            <field name="name">employee_attendance_summary_form</field>
+            <field name="model">attendance.employee.summary</field>
+            <field name="arch" type="xml">
+                <form sample="1">
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+
+                        </h1>
+                        <group style="width: 100%;">
+                            <group style="width: 25%;" string="Yearly Attendance">
+                                <field name="total_regular_hours_per_year"/>
+                                <field name="total_late_hours_per_year"/>
+                                <field name="total_vacation_leave_hours_per_year"/>
+                                <field name="total_sick_leave_hours_per_year"/>
+                                <field name="total_leave_w_o_pay_hours_per_year"/>
+                                <field name="total_overtime_hours_per_year"/>
+                                <field name="total_offset_hours_per_year"/>
+                                <field name="total_undertime_hours_per_year"/>
+                                <field name="total_birthday"/>
+                                <field name="total_absent"/>
+                            </group>
+                            
+                            <group style="width: 25%;" string="Credits">
+                                <field name="vacation_leave_credits"/>
+                                <field name="sick_leave_credits"/>
+                                <field name="birthday_leave_credits"/>
+                            </group>
+
+                            <group style="width: 25%;" string="Remaining Credits">
+                                <field name="remaining_vacation_leave"/>
+                                <field name="remaining_sick_leave"/>
+                                <field name="remaining_birthday_leave"/>
+                                <field name="remaining_offset"/>
+                            </group>
+
+                            <group style="width: 25%;" string = "Progress">
+                                <field name="progress_late" widget="progress_bar_new"/>
+                                <field name="progress_vacation_leave" widget="progress_bar_new"/>
+                                <field name="progress_sick_leave" widget="progress_bar_new"/>
+                            </group>
+                        </group>
+                        
+                        <field name="attendance_ids">
+                            <tree>
+                                <field name="att_date"/>
+                                <field name="time_in"/>
+                                <field name="time_out"/>
+                                <field name="total_hours"/>
+                                <field name="late_tardiness"/>
+                                <field name="vacation_leave"/>
+                                <field name="sick_leave"/>
+                                <field name="leave_wo_pay"/>
+                                <field name="ot_hours"/>
+                                <field name="offset_hours"/>
+                                <field name="undertime"/>
+                                <field name="absent"/>
+                                <field name="paycode_id"/>
+                            </tree>
+                        </field>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search view for Employee Attendance Summary -->
+        <record id="employee_attendance_summary_search" model="ir.ui.view">
+            <field name="name">employee_attendance_summary_search</field>
+            <field name="model">attendance.employee.summary</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action for Employee Attendance Summary -->
+        <record id="action_employee_attendance_summary" model="ir.actions.act_window">
+            <field name="name">action_employee_attendance_summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">attendance.employee.summary</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="employee_attendance_summary_search"/>
+        </record>
+
+<!-- ____________________________________________________________________________________ -->
+        
+    </data>
+</odoo>

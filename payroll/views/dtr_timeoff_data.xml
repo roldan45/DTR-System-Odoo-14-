@@ -1,0 +1,82 @@
+<odoo>
+    <data>
+		
+        <record id="tree_dtr_timeoff_data" model="ir.ui.view">
+            <field name="name">tree_dtr_timeoff_data</field>
+            <field name="model">dtr.timeoff.data</field>
+            <field name="arch" type="xml">
+                <tree sample="1">
+                    <field name="name"/>
+                    <field name="time_off_id"/>
+                    <field name="att_date"/>
+                    <field name="time_in"/>
+                    <field name="time_out"/>
+                    <field name="total_hours"/>
+                    <field name="late_tardiness"/>
+                    <field name="ot_hours"/>
+                    <field name="offset_hours"/>
+                    <field name="undertime"/>
+                    <field name="vacation_leave"/>
+                    <field name="sick_leave"/>
+                    <field name="leave_wo_pay"/>
+                    <field name="bday_leave"/>
+                    <field name="absent"/>
+                    <field name="discrepancy_status" decoration-danger="discrepancy_status == 'false_punch' or discrepancy_status == 'absent'"
+                        decoration-warning="discrepancy_status == 'undertime' or discrepancy_status == 'halfday'"
+                        decoration-info="discrepancy_status == 'overtime'" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="form_dtr_timeoff_data" model="ir.ui.view">
+            <field name="name">form_dtr_timeoff_data</field>
+            <field name="model">dtr.timeoff.data</field>
+            <field name="arch" type="xml">
+                <form sample="1">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="time_off_id"/>
+                            <field name="att_date"/>
+                            <field name="time_in"/>
+                            <field name="time_out"/>
+                            <field name="total_hours"/>
+                            <field name="late_tardiness"/>
+                            <field name="ot_hours"/>
+                            <field name="offset_hours"/>
+                            <field name="undertime"/>
+                            <field name="vacation_leave"/>
+                            <field name="sick_leave"/>
+                            <field name="leave_wo_pay"/>
+                            <field name="bday_leave"/>
+                            <field name="absent"/>
+                            <field name="discrepancy_status" decoration-danger="discrepancy_status == 'false_punch' or discrepancy_status == 'absent'"
+                                decoration-warning="discrepancy_status == 'undertime' or discrepancy_status == 'halfday'"
+                                decoration-info="discrepancy_status == 'overtime'" widget="badge"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="search_dtr_timeoff_data" model="ir.ui.view">
+            <field name="name">search_dtr_timeoff_data</field>
+            <field name="model">dtr.timeoff.data</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_dtr_timeoff_data" model="ir.actions.act_window">
+            <field name="name">action_dtr_timeoff_data</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">dtr.timeoff.data</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="search_dtr_timeoff_data"/>
+        </record>
+    </data>
+</odoo>

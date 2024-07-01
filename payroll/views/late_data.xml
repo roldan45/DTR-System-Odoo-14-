@@ -1,0 +1,155 @@
+<odoo>
+	<data>
+
+		<record id="tree_late_data_summary" model="ir.ui.view">
+			<field name="name">tree_late_data_summary</field>
+			<field name="model">late.data.summary</field>
+			<field name="arch" type="xml">
+				<tree sample="1">
+					<field name="name"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="form_late_data_summary" model="ir.ui.view">
+			<field name="name">form_late_data_summary</field>
+			<field name="model">late.data.summary</field>
+			<field name="arch" type="xml">
+				<form sample="1">
+					<sheet>
+						<header>
+							<button name="create_data" type="object" string="Get Data" class="oe_highlight"/>
+						</header>
+						<h1>
+							<field name="name" placeholder="e.g. JANUARY 2024" required="1" />
+						</h1>
+						<group>
+							<group string="Paycode A">
+								<field name="paycode_start_id" required="1"/>
+								<field name="date_from"/>
+							</group>
+							<group string="Paycode B">
+								<field name="paycode_end_id" required="1"/>
+								<field name="date_to"/>
+							</group>
+						</group>
+						<notebook>
+							<page string="Employee List">
+								<field name="line_item_ids">
+									<tree sample="1" default_order="name asc">
+										<field name="name" options="{'bg_color': '#CCFF00 : total_late_tardiness > 120'}" />
+										<field name="department_id" options="{'bg_color': '#CCFF00 : total_late_tardiness > 120'}" />
+										<field name="total_late_tardiness" options="{'bg_color': '#CCFF00 : total_late_tardiness > 120'}" />
+										<field name="late_count" options="{'bg_color': '#CCFF00 : total_late_tardiness > 120'}" />
+										<field name="total_undertime" options="{'bg_color': '#CCFF00 : total_late_tardiness > 120'}" />
+										<field name="undertime_count" options="{'bg_color': '#CCFF00 : total_late_tardiness > 120'}" />
+									</tree>
+								</field>
+							</page>
+							<page string="Employees to Memo">
+								<field name="most_late_ids" domain="[('total_late_tardiness', '>', 120.0)]">
+									<tree sample="1" default_order="total_late_tardiness desc">
+										<field name="name" />
+										<field name="department_id" />
+										<field name="total_late_tardiness" />
+										<field name="late_count" />
+										<field name="total_undertime" />
+										<field name="undertime_count" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+
+				</form>
+			</field>
+		</record>
+
+		<record id="search_late_data_summary" model="ir.ui.view">
+			<field name="name">search_late_data_summary</field>
+			<field name="model">late.data.summary</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_late_data_summary" model="ir.actions.act_window">
+			<field name="name">action_late_data_summary</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">late.data.summary</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="search_late_data_summary"/>
+		</record>
+
+<!-- _________________________________________________________________________________________ -->
+
+		<record id="tree_late_data" model="ir.ui.view">
+			<field name="name">tree_late_data</field>
+			<field name="model">late.data</field>
+			<field name="arch" type="xml">
+				<tree sample="1">
+					<field name="name"/>
+					<field name="department_id"/>
+					<field name="position_id"/>
+					<field name="total_late_tardiness"/>
+					<field name="late_count"/>
+					<field name="total_undertime"/>
+					<field name="undertime_count"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="form_late_data" model="ir.ui.view">
+			<field name="name">form_late_data</field>
+			<field name="model">late.data</field>
+			<field name="arch" type="xml">
+				<form sample="1">
+					<sheet>
+						<h1>
+							<field name="name"/>
+						</h1>
+						<group>
+							<field name="department_id"/>
+							<field name="position_id"/>
+							<field name="total_late_tardiness"/>
+							<field name="late_count"/>
+							<field name="total_undertime"/>
+							<field name="undertime_count"/>
+						</group>
+						<field name="late_dtr_ids">
+							<tree>
+								<field name="name"/>
+								<field name="att_date"/>
+								<field name="late_tardiness"/>
+								<field name="undertime"/>
+							</tree>
+						</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="search_late_data" model="ir.ui.view">
+			<field name="name">search_late_data</field>
+			<field name="model">late.data</field>
+			<field name="arch" type="xml">
+				<search>
+					<field name="name"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_late_data" model="ir.actions.act_window">
+			<field name="name">action_late_data</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">late.data</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="search_late_data"/>
+		</record>
+
+	</data>
+</odoo>

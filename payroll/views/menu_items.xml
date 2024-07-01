@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="menu_employee_root" name="Employee" sequence="300" web_icon="payroll,static/description/employee.png"/>
+        <menuitem id="menu_pay_employee" name="Employee" parent="menu_employee_root" action="action_pay_employee" sequence="1"/>
+
+        <menuitem id="menu_configuration" name="Configuration" parent="menu_employee_root" sequence="2"/>
+            <menuitem id="menu_department" name="Department" parent="menu_configuration" action="action_pay_department" sequence="1"/>
+            <menuitem id="menu_project" name="Project" parent="menu_configuration" action="action_pay_project" sequence="2"/>
+            <menuitem id="menu_position" name="Position" parent="menu_configuration" action="action_pay_position" sequence="3"/>
+
+        <menuitem id="menu_payroll_process" name="Payroll Process" parent="menu_employee_root" action="action_payroll_process" sequence="3"/>
+        <menuitem id="menu_payroll_payslip" name="Payroll Payslip" parent="menu_employee_root" action="action_payroll_payslip" sequence="4"/>
+        
+
+    <menuitem id="menu_dtr_root" name="DTR Process" sequence="301" web_icon="payroll,static/description/dtr.png"/>
+
+        <menuitem id="menu_paycode" name="Paycode" parent="menu_dtr_root" sequence="5"/>
+            <menuitem id="menu_paycode_creation" name="Paycode Create" parent="menu_paycode" action="action_payroll" sequence="1"/>
+            <menuitem id="menu_paycode_draft" name="Paycode (Draft)" parent="menu_paycode" action="action_payroll_draft" sequence="2"/>
+            <menuitem id="menu_paycode_done" name="Paycode (Done)" parent="menu_paycode" action="action_payroll_done" sequence="3"/>
+
+        <menuitem id="dtr_configuration" name="Configuration" parent="menu_dtr_root" sequence="6" />
+            <menuitem id="import_biometrics" name="Import Biometric logs" parent="dtr_configuration" action="action_import_bio_logs" sequence="4"/>
+            <menuitem id="view_biometrics_logs" name="Biometric logs" parent="dtr_configuration" action="action_bio_logs" sequence="5"/>
+            <menuitem id="menu_attendance_department" name="Attendance Department" parent="dtr_configuration" action="action_attendance_department" sequence="6"/>
+            <menuitem id="menu_attendance_employee" name="Attendance Employee" parent="dtr_configuration" action="action_attendance_employee" sequence="7"/>
+            <menuitem id="menu_attendance_employee_data" name="Attendance Employee Data" parent="dtr_configuration" action="action_attendance_employee_data" sequence="8"/>
+        
+
+        <menuitem id="menu_attendance" name="Attendance" parent="menu_dtr_root" action="action_employee_attendance_summary" sequence="7"/>
+        <menuitem id="menu_timeoff" name="Time Off" parent="menu_dtr_root" action="action_dtr_timeoff" sequence="8"/>
+        <menuitem id="menu_timeoff_data" name="Time Off Data" parent="menu_dtr_root" action="action_dtr_timeoff_data" sequence="8"/>
+        <menuitem id="menu_set_leave_days" name="Set Leave Days" parent="menu_dtr_root" action="action_attendance_setleave_wizard" sequence="9"/>
+        <menuitem id="menu_report" name="Reports" parent="menu_dtr_root" sequence="10"/>
+            <menuitem id="menu_late_data_summary" name="Late Data Summary Report" parent="menu_report" action="action_print_late_summary" sequence="2"/>
+
+        <menuitem id="menu_lates" name="Lates" parent="menu_dtr_root" sequence="11"/>
+            <menuitem id="menu_late_summary" name="Late Data Summary" action="action_late_data_summary" parent="menu_lates" sequence="11"/>
+            <menuitem id="menu_late_data" name="Late Data" action="action_late_data" parent="menu_lates" sequence="12"/>
+
+        <menuitem id="menu_events" name="Set Holiday Events" action="action_events" parent="menu_dtr_root" sequence="13"/>
+        
+</odoo>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Payroll Tree -->
+	<record id="tree_payroll" model="ir.ui.view">
+		<field name="name">tree_payroll</field>
+		<field name="model">base.payroll</field>
+		<field name="arch" type="xml">
+			<tree string="Payroll" default_order="state asc" sample="1">
+				<field name="name"/>
+				<field name="date_from"/>
+				<field name="date_to"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="kanban_payroll" model="ir.ui.view">
+		<field name="name">kanban_payroll</field>
+		<field name="model">base.payroll</field>
+		<field name="arch" type="xml">
+			<kanban class="o_kanban_small_column" create="1" default_order="name desc" sample="1" group_create="false" records_draggable="false" group_delete='false' group_edit='false'>
+				<templates>
+					<t t-name="kanban-box">
+						<div class="oe_kanban_global_click" t-attf-style="box-shadow: 12px 12px 17px 0 rgba(0,0,0,3); 
+								background-color: #{record.state.raw_value === 'draft' ? '#ff8585' 
+									: record.state.raw_value === 'in_progress' ? '#fffc9c' 
+									: record.state.raw_value === 'done' ? 'lightgreen' 
+									: 'inherit'}; 
+								color: #{record.state.raw_value === 'draft' ? 'white' : 'inherit'};
+								border-radius: 10px; 
+								font-family: 'Verdana'; ">
+							<div class="o_kanban_card_header" style="border-bottom: 1px solid black;">
+								<div class="o_kanban_card_header_title">
+									<div class="o_primary">
+										<strong>
+											<span>
+													PAYCODE:
+												<field name="name"/>
+											</span>
+											<span class="float-right">
+												<field name="state"
+													decoration-success="state == 'done'"
+													decoration-warning="state == 'in_progress' or state == 'draft'"
+													widget="badge"/>
+											</span>
+										</strong>
+									</div>
+									<div>
+										<span>
+											<small>
+												<i class="fa fa-calendar" role="img"/>
+											</small>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="container o_kanban_card_content">
+								<div class="row">
+									<div class="col-6">
+										<strong>Date From:</strong>
+									</div>
+									<div class="col-6">
+										<span class="float-right">
+											<field name="date_from"/>
+										</span>
+									</div>
+									<div class="col-6">
+										<strong>Date To:</strong>
+									</div>
+									<div class="col-6">
+										<span class="float-right">
+											<field name="date_to"/>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</t>
+				</templates>
+			</kanban>
+		</field>
+	</record>
+
+	<!-- Payroll Form -->
+	<record id="form_payroll" model="ir.ui.view">
+		<field name="name">form_payroll</field>
+		<field name="model">base.payroll</field>
+		<field name="arch" type="xml">
+			<form string="Payroll" create="0" sample="1">
+				<header>
+					<field name="state"
+						decoration-success="state == 'done'"
+						decoration-warning="state == 'in_progress' or state == 'draft'"
+						widget="badge"/>
+						<!-- <button name="action_draft" type="object" class="btn-primary" string="Set to Draft" attrs="{'invisible': [('state', 'in', ['in_progress', 'draft'])]}"/>
+						<button name="action_done" type="object" class="btn-primary" string="Done" attrs="{'invisible': [('state', 'in', ['done', 'draft'])]}"/> -->
+						<button name="process_data" string="Process Data" type="object" /> # attrs="{'invisible': [('state', 'in', ['in_progress', 'done'])]}"
+				</header>
+				<sheet>
+					<div style="padding-top: 20px;">
+						<button name="debug" type="object" string="debug"/>
+						<button name="%(action_payroll_report)d" string="Print" type="action" style="float:right;" class="btn-dark"/>
+					</div>
+					<h1>
+						<field name="name" readonly="1"/>
+					</h1>
+					<group string="Paycode">
+						<div class="o_group_col_6">
+							<group string="Information">
+								<field name="name"  placeholder="e.g. 202309A"/>
+								<field name="total_workdays"/> 
+								<field name="total_holiday"/> 
+								<field name="state"  readonly="1"
+									decoration-success="state == 'done'"
+									decoration-warning = "state == 'draft' or state == 'in_progress'"
+									widget="badge"/>
+							</group>
+						</div>
+						<div class="o_group_col_6">
+							<group string="Date Range">
+								<field name="date_from"/>
+								<field name="date_to"/>
+							</group>
+						</div>
+					</group>
+					<div>
+						<notebook>
+							<page string="Department">
+								<field name="department_line_ids" editable="false" force_save="1">
+									<kanban class="o_kanban_small_column" create="1" default_order="name desc" kanban-click="open_form_view('form_attendance_department')"> 
+										<templates>
+											<t t-name="kanban-box">
+												<div class="oe_kanban_global_click" t-attf-style="box-shadow: 12px 12px 17px 0 rgba(0,0,0,3); 
+															background-color: #{record.state.raw_value === 'draft' ? '#ff8585' 
+																: record.state.raw_value === 'done' ? 'lightgreen' 
+																: 'inherit'}; 
+															color: #{record.state.raw_value === 'draft' ? 'white' : 'inherit'};
+															border-radius: 10px; 
+															font-family: 'Verdana'; ">
+
+													<div class="o_kanban_card_header" style="border-bottom: 1px solid black;">
+														<div class="o_kanban_card_header_title">
+															<div class="o_primary">
+																<strong>
+																	<span>
+																		<field name="name"/>
+																	</span>
+																	<span class="float-right">
+																		<field name="state"
+																			decoration-success="state == 'done'"
+																			decoration-warning = "state == 'draft'"
+																			widget="badge"/>
+																	</span>
+																</strong>
+															</div>
+															<div>
+																<span>
+																	<strong>Total Employees:</strong>
+																</span>
+																<span class="float-right">
+																	<small><field name="total_employees"/>  <i class="fa fa-users" role="img"/></small>
+																</span>
+															</div>
+														</div>
+													</div>
+
+													<div class="container o_kanban_card_content">
+														<div class="row">
+															<div class="col-6">
+																<strong>Date From:</strong>
+															</div>
+															<div class="col-6">
+																<span class="float-right">
+																	<field name="date_from"/>
+																</span>
+															</div>
+															<div class="col-6">
+																<strong>Date To:</strong>
+															</div>
+															<div class="col-6">
+																<span class="float-right">
+																	<field name="date_to"/>
+																</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</t>
+										</templates>
+									</kanban>
+								</field>
+							</page>
+							
+							<page string="Discrepancy Analyst">
+								<field name='discrepancy_ids'>
+									<tree>
+										<field name="name"/>
+										<field name="att_date"/>
+										<field name="time_in"/>
+										<field name="time_out"/>
+										<field name="total_hours"/>
+										<field name="late_tardiness"/>
+										<field name="undertime"/>
+										<field name="absent"/>
+										<field name="discrepancy_status" decoration-danger="discrepancy_status == 'false_punch' or discrepancy_status == 'absent'"
+														decoration-warning="discrepancy_status == 'undertime' or discrepancy_status == 'halfday'"
+														decoration-info="discrepancy_status == 'overtime'" widget="badge"/>
+										<!-- <button name="%(payroll.action_fix_record_wizard)d" type="object" string="Fix" class="btn-danger"/> -->
+									</tree>
+								</field>
+							</page>
+							
+							<page string="Absent">
+								<field name='absent_ids'>
+									<tree>
+										<field name="name"/>
+										<field name="att_date"/>
+										<field name="time_in"/>
+										<field name="time_out"/>
+										<field name="total_hours"/>
+										<field name="absent"/>
+										<field name="discrepancy_status" decoration-danger="discrepancy_status == 'false_punch' or discrepancy_status == 'absent'"
+														decoration-warning="discrepancy_status == 'undertime' or discrepancy_status == 'halfday'"
+														decoration-info="discrepancy_status == 'overtime'" widget="badge"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</div>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<!-- Payroll Search -->
+	<record id="search_payroll" model="ir.ui.view">
+		<field name="name">search_payroll</field>
+		<field name="model">base.payroll</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name"/>
+			</search>
+		</field>
+	</record>
+
+	<!-- Payroll Action-->
+	<record id="action_payroll" model="ir.actions.act_window">
+		<field name="name">action_payroll</field>
+		<field name="res_model">base.payroll</field>
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="search_view_id" ref="search_payroll"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+							No Data found! Create one now.
+			</p>
+			<p>
+							Please call your Administrator for updates.
+			</p>
+		</field>
+	</record>
+
+	<!-- Payroll Draft Action-->
+	<record id="action_payroll_draft" model="ir.actions.act_window">
+		<field name="name">action_payroll_draft</field>
+		<field name="res_model">base.payroll</field>
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="search_view_id" ref="search_payroll"/>
+		<field name="domain">[('state', '=', 'draft')]</field>
+		<field name="help" type="html">
+				<p class="o_view_nocontent_smiling_face">
+						No Data found! Create one now.
+				</p>
+				<p>
+						Please call your Administrator for updates.
+				</p>
+		</field>
+	</record>
+
+	<!-- Payroll Done Action-->
+	<record id="action_payroll_done" model="ir.actions.act_window">
+		<field name="name">action_payroll_done</field>
+		<field name="res_model">base.payroll</field>
+		<field name="view_mode">kanban,tree,form</field>
+		<field name="search_view_id" ref="search_payroll"/>
+		<field name="domain">[('state', '=', 'done')]</field>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+								No Data found! Create one now.
+			</p>
+			<p>
+								Please call your Administrator for updates.
+			</p>
+		</field>
+	</record>
+
+</odoo>

@@ -1,0 +1,270 @@
+<odoo>
+	<template id="late_summary_report" name="Summary Late Report">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="o">
+				<t t-call="web.basic_layout">
+					<div class="header" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; margin-left: auto; margin-right: auto; width: 90%;">
+						<div style="float: left;">
+							<p>
+								<img src="/base_payroll/static/src/img/logo.png" style="max-width: 100px; max-height: 100px;"/>
+							</p>
+						</div>
+						<div style="text-align: center; color:#185db8; padding-right:100px;">
+							<h4 >MILLENIUM ERECTORS CORPORATION</h4>
+							<p style="font-size: 14px;">Main Office: LVT Bldg. 9445 Retiro Street, Guadalupe Nuevo, Makati City</p>
+							<p style="font-size: 17px;">Tel No: 882-1537 to 38 Fax No: 882-3229</p>
+						</div>             
+					</div>					
+					<div class="page" style="margin:7%; font-size:15px">
+						<div class="content">
+							<p>Tardiness for the month of <span t-field="o.name"/></p>
+							<table style="width: 100%; border-collapse: collapse;  margin-left: auto; margin-right: auto;">
+								<thead>
+									<tr style="text-align: center; border: 1px solid #000;">
+										<th style="border: 1px solid black; padding: 4px; vertical-align: middle; background-color:#509afa;" colspan="2">EMPLOYEE'S NAME</th>
+										<th style="border: 1px solid black; padding: 4px; height: 30px; vertical-align: middle; background-color:#509afa;">DESIGNATION</th>
+										<th style="border: 1px solid black; padding: 4px; vertical-align: middle; background-color:#fcba03;">TOTAL TIMES</th>
+										<th style="border: 1px solid black; padding: 4px; vertical-align: middle; background-color:#fcba03;">TOTAL MINS.</th>
+										<th style="border: 1px solid black; padding: 4px; vertical-align: middle; background-color:#fcba03;">NOTED BY SUPERIOR</th>
+									</tr>
+								</thead>
+								<tbody>
+									<t t-set="rows" t-value="1"/>
+									<t t-foreach="o.most_late_ids.sorted(key=lambda m: m.name.name)" t-as="most_late_summary">
+										<tr style="border: 1px solid #000; text-align: center; width: 30%">
+											<td style="padding: 4px;">
+												<t t-esc="rows"/>
+											</td>
+											<td style="border: 1px solid black; padding: 4px; text-align: left;">
+												<span t-field="most_late_summary.name"/>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<span t-field="most_late_summary.position_id"/>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="most_late_summary.late_count > 0">
+													<span t-field="most_late_summary.late_count"/>
+												</t>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="most_late_summary.total_late_tardiness > 0">
+													<span t-esc="'%.0f' % most_late_summary.total_late_tardiness"/>
+												</t>
+											</td>
+											<td style="border: 1px solid black; padding: 4px; width:25%;">
+
+											</td>
+										</tr>
+										<t t-set="rows" t-value="rows + 1"/>
+									</t>
+								</tbody>
+							</table>
+							<div style="padding-top: 40px;">
+								<p style="margin-bottom: 0px;">LEGEND:</p>
+								<p>*Incurring habitual tardiness from work, ten (10) times in a month or have accumulated <br/>one hundred twenty (120) minutes in a month</p>
+							</div>
+							<div style="padding-top: 60px;">
+								<table style="width: 90%; margin-left: auto; margin-right: auto;">
+									<thead>
+										<tr>
+											<th style="height:70px; width:24%;">Prepared by:</th>
+											<th style="height:70px; width:24%;">Checked by:</th>
+											<th style="height:70px; width:28%;"></th>
+											<th style="height:70px; width:24%;">Noted by:</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Joyce Anne Villanueva</td>
+											<td>Rosslyn Leyva</td>
+											<td style="width:30%;"></td>
+											<td>Mr. Kenneth Laurence Tiu</td>
+										</tr>
+										<tr>
+											<td>HR Assistant</td>
+											<td>HR Head</td>
+											<td style="width:30%;"></td>
+											<td>VP for Admin</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+					</div>
+					<div style="page-break-after: always;"></div>
+
+				</t>
+				<!-- _________________________________________________________________________________ -->
+
+				<t t-call="web.basic_layout">
+					<div class="header" style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; margin-left: auto; margin-right: auto; width:80%; ">
+						<div style="float: left;">
+							<p>
+								<img src="/base_payroll/static/src/img/logo.png" style="max-width: 100px; max-height: 100px;"/>
+							</p>
+						</div>
+						<div style="float: right;">
+							<p>
+								<img src="/base_payroll/static/src/img/iso.png" style="max-width: 100px; max-height: 100px;"/>
+							</p>
+						</div>  
+						<div style="text-align: center;">
+							<h4>MILLENIUM ERECTORS CORPORATION</h4>
+							<p style="margin-top: 1px; padding: 0; font-size: 14px;">9445 Retiro Street, Guadalupe Nuevo, Makati City</p>
+							<p style="margin-top: 5px; padding: 0; font-size: 17px;">TARDINESS / UNDERTIME SUMMARY</p>
+							<p style="margin: 0; padding: 0;font-size: 17px;">MONTH OF <span t-field="o.name"/>
+							</p>
+						</div>
+					</div>
+					<div class="page">
+						<div class="content">
+							<t t-set="multi" t-value="o.get_late_days()"/>
+							<t t-set="months" t-value="multi[0]"/>
+							<t t-set="hello" t-value="multi[1]"/>
+							<table style="width: 100%; border-collapse: collapse; margin-left: auto; margin-right: auto; font-size: 12px;">
+								<thead>
+									<tr style="background-color: #e6e6e6; text-align: center;  border: 1px solid #000;">
+										<th colspan="2" rowspan="3" style="border: 1px solid black; padding: 4px; vertical-align: middle;">NAME</th>
+										<th rowspan="3" style="border: 1px solid black; padding: 4px; vertical-align: middle;">DEPARTMENT</th>
+										<th t-att-colspan="sum([days[1] for days in months])" style="border: 1px solid black; padding: 4px;"></th>
+										<th style="border-bottom: solid white; border-top: solid white; background-color: white; padding: 4px;"></th>
+										<th colspan="4" style="border: 1px solid black; padding: 4px;">TOTAL</th>
+									</tr>
+									<tr style="background-color: #e6e6e6; text-align: center; border: 1px solid #000;">
+										<t t-foreach="months" t-as="month">
+											<th t-att-colspan="month[1]" style="border: 1px solid black; padding: 4px; ">
+												<t t-esc="month[0]" />
+											</th>
+										</t>
+										<th style="border-bottom: solid white; border-top: solid white; background-color: white; padding: 4px;"></th>
+										<th colspan="2" style="border: 1px solid black; padding: 4px;">LATE</th>
+										<th colspan="2" style="border: 1px solid black; padding: 4px;">UT</th>
+									</tr>
+									<tr style="background-color: #e6e6e6; text-align: center; border: 1px solid #000;">
+										<t t-foreach="hello" t-as="day">
+											<th style="border: 1px solid black; padding: 4px;">
+												<t t-esc="day"/>
+											</th>
+										</t>
+										<th style="border-bottom: solid white; border-top: solid white; background-color: white; padding: 4px;"></th>
+										<th style="border: 1px solid black; padding: 4px;">MIN.</th>
+										<th style="border: 1px solid black; padding: 4px;">TIMES</th>
+										<th style="border: 1px solid black; padding: 4px;">MIN.</th>
+										<th style="border: 1px solid black; padding: 4px;">TIMES</th>
+									</tr>
+								</thead>
+								<tbody>
+									<t t-set="row_number" t-value="1"/>
+									<t t-foreach="o.line_item_ids.sorted(key=lambda m: m.name.name)" t-as="late_summary">
+										<tr t-att-style="'background-color: #CCFF00; border: 1px solid #000; text-align: center; width: 30%;'" t-if="late_summary.total_late_tardiness > 120">
+											<td style="padding: 4px;">
+												<t t-esc="row_number"/>
+											</td>
+											<td style="border: 1px solid black; padding: 4px; text-align: left;">
+												<span t-field="late_summary.name"/>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<span t-field="late_summary.department_id"/>
+											</td>
+											<t t-foreach="hello" t-as="day">
+												<td style="border: 1px solid black; padding: 4px;">
+													<t t-set="att_dates" t-value="late_summary.late_dtr_ids.filtered(lambda r: r.att_date and r.att_date.day == day)"/>
+													<t t-if="att_dates">
+														<t t-if="att_dates[0].late_tardiness > 0 and att_dates[0].undertime > 0" >
+															<span t-esc="'%.0f' % att_dates[0].late_tardiness" />/<span t-esc="'%.0f' % att_dates[0].undertime" style="background-color: orange;"/>
+														</t>
+														<t t-if="att_dates[0].late_tardiness > 0 and not att_dates[0].undertime > 0" >
+															<span t-esc="'%.0f' % att_dates[0].late_tardiness" />
+														</t>
+														<t t-if="not att_dates[0].late_tardiness > 0 and att_dates[0].undertime > 0" >
+															<span t-esc="'%.0f' % att_dates[0].undertime" style="background-color: orange;" />
+														</t>
+													</t>
+												</td>
+											</t>
+											<td style="border-bottom: solid white; border-top: solid white; padding: 4px;"></td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="late_summary.total_late_tardiness > 0">
+													<span t-esc="'%.0f' % late_summary.total_late_tardiness"/>
+												</t>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="late_summary.late_count > 0">
+													<span t-field="late_summary.late_count"/>
+												</t>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="late_summary.total_undertime > 0">
+													<span t-esc="'%.0f' % late_summary.total_undertime"/>
+												</t>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="late_summary.undertime_count > 0">
+													<span t-field="late_summary.undertime_count"/>
+												</t>
+											</td>
+										</tr>
+
+										<tr t-att-style="'background-color: inherit; border: 1px solid #000; text-align: center; width: 30%;'" t-if="late_summary.total_late_tardiness &lt;= 119">
+											<td style="padding: 4px;">
+												<t t-esc="row_number"/>
+											</td>
+											<td style="border: 1px solid black; padding: 4px; text-align: left;">
+												<span t-field="late_summary.name"/>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<span t-field="late_summary.department_id"/>
+											</td>
+											<t t-foreach="hello" t-as="day">
+												<td style="border: 1px solid black; padding: 4px;">
+													<t t-set="att_dates" t-value="late_summary.late_dtr_ids.filtered(lambda r: r.att_date and r.att_date.day == day)"/>
+													<t t-if="att_dates">
+														<t t-if="att_dates[0].late_tardiness > 0 and att_dates[0].undertime > 0" >
+															<span t-esc="'%.0f' % att_dates[0].late_tardiness" />/<span t-esc="'%.0f' % att_dates[0].undertime" style="background-color: orange;"/>
+														</t>
+														<t t-if="att_dates[0].late_tardiness > 0 and not att_dates[0].undertime > 0" >
+															<span t-esc="'%.0f' % att_dates[0].late_tardiness" />
+														</t>
+														<t t-if="not att_dates[0].late_tardiness > 0 and att_dates[0].undertime > 0" >
+															<span t-esc="'%.0f' % att_dates[0].undertime" style="background-color: orange;" />
+														</t>
+													</t>
+												</td>
+											</t>
+											<td style="border-bottom: solid white; border-top: solid white; padding: 4px;"></td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="late_summary.total_late_tardiness > 0">
+													<span t-esc="'%.0f' % late_summary.total_late_tardiness"/>
+												</t>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="late_summary.late_count > 0">
+													<span t-field="late_summary.late_count"/>
+												</t>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="late_summary.total_undertime > 0">
+													<span t-esc="'%.0f' % late_summary.total_undertime"/>
+												</t>
+											</td>
+											<td style="border: 1px solid black; padding: 4px;">
+												<t t-if="late_summary.undertime_count > 0">
+													<span t-field="late_summary.undertime_count"/>
+												</t>
+											</td>
+										</tr>
+										<t t-set="row_number" t-value="row_number + 1"/>
+									</t>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div style="page-break-after: always;"></div>
+				</t>
+			</t>
+		</t>
+		
+	</template>
+	
+</odoo>

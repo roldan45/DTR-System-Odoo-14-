@@ -1,0 +1,134 @@
+<odoo>
+    <template id="attendance_department_report" name="Employee Timelog Report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div class="header">
+                            <div style="text-align: center;">
+                                <h4>MILLENIUM ERECTORS CORPORATION</h4>
+                                <p style="margin-top: 5px; font-size: 12px;">9445 Retiro St., Guadalupe Nuevo Makati City</p>
+                                <p style="font-size: 12px;">Telephone: 882-15-37/38</p>
+                                <p style="font-size: 12px;">DAILY TIME RECORD (DTR) REPORT</p>
+                                <p style="font-size: 12px; white-space: pre;">From   <span t-esc="o.date_from.strftime('%B %d, %Y')"/>   to   <span t-esc="o.date_to.strftime('%B %d, %Y')"/></p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p><strong>Department: </strong><span t-field="o.name"/></p>
+                            <t t-if="o.timelog_line_ids">
+                                <t t-set="employee_count" t-value="0"/>
+                                <t t-set="thead_rendered" t-value="False"/>
+                                <t t-foreach="o.timelog_line_ids.sorted(key=lambda m: m.name.name)" t-as="line">
+                                    <t t-set="employee_count" t-value="employee_count + 1"/>
+                                    
+                                    <t t-if="line.dtr_line_ids">
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <th style="width: 80%; padding: 5px;">Employee Name:<span style="padding-left: 10px" t-field="line.name"/></th>
+                                                <th style="width: 20%; padding: 5px;">Employee ID: <span style="padding-left: 10px" t-field="line.emp_bio_id"/></th>
+                                            </tr>
+                                        </table>
+                                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+                                            <thead>
+                                                <tr style="background-color: #e6e6e6; text-align: center; font-size: 12px; border: 1px solid #000;">
+                                                    <th style="border: 1px solid black;">Date</th>
+                                                    <th style="border: 1px solid black;">In</th>
+                                                    <th style="border: 1px solid black;">Out</th>
+                                                    <th style="border: 1px solid black;">Reg</th>
+                                                    <th style="border: 1px solid black;">OT</th>
+                                                    <th style="border: 1px solid black;">Late</th>
+                                                    <th style="border: 1px solid black;">OFF</th>
+                                                    <th style="border: 1px solid black;">VL</th>
+                                                    <th style="border: 1px solid black;">SL</th>
+                                                    <th style="border: 1px solid black;">BL</th>
+                                                    <th style="border: 1px solid black;">LWOP</th>
+                                                    <th style="border: 1px solid black;">UT</th>
+                                                    <th style="border: 1px solid black;">ABS</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+											<tbody>
+												<t t-foreach="line.dtr_line_ids" t-as="dtr">
+													<tr style="font-size: 12px; border: 1px solid #000; text-align: center;">
+														<td style="width: 7%; border: 1px solid black;"><span t-esc="dtr.att_date.strftime('%b. ') + str(dtr.att_date.day)"/></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-if="dtr.time_in != 0"><span t-field="dtr.time_in"/></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-if="dtr.time_out != 0"><span t-field="dtr.time_out"/></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="total_hours" t-value="round(dtr.total_hours, 2)"/><t t-if="total_hours != 0"><t t-esc="'{:.2f}'.format(total_hours).rstrip('0').rstrip('.')"/></t><t t-if="total_hours == 0"></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="ot_hours" t-value="round(dtr.ot_hours, 2)"/><t t-if="ot_hours != 0"><t t-esc="'{:.2f}'.format(ot_hours).rstrip('0').rstrip('.')"/></t><t t-if="ot_hours == 0"></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="late" t-value="round(dtr.late_tardiness, 2)"/><t t-if="late != 0"><t t-esc="'{:.2f}'.format(late).rstrip('0').rstrip('.')"/></t><t t-if="late == 0"></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="offset" t-value="round(dtr.offset_hours, 2)"/><t t-if="offset != 0"><t t-esc="'{:.2f}'.format(offset).rstrip('0').rstrip('.')"/></t><t t-if="offset == 0"></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="vl" t-value="round(dtr.vacation_leave, 2)"/><t t-if="vl != 0"><t t-esc="'{:.2f}'.format(vl).rstrip('0').rstrip('.')"/></t><t t-if="vl == 0"></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="sl" t-value="round(dtr.sick_leave, 2)"/><t t-if="sl != 0"><t t-esc="'{:.2f}'.format(sl).rstrip('0').rstrip('.')"/></t><t t-if="sl == 0"></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="bl" t-value="round(dtr.bday_leave, 2)"/><t t-if="bl != 0"><t t-esc="'{:.2f}'.format(bl).rstrip('0').rstrip('.')"/></t><t t-if="bl == 0"></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="lwop" t-value="round(dtr.leave_wo_pay, 2)"/><t t-if="lwop != 0"><t t-esc="'{:.2f}'.format(lwop).rstrip('0').rstrip('.')"/></t><t t-if="lwop == 0"></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="ut" t-value="round(dtr.undertime, 2)"/><t t-if="ut != 0"><t t-esc="'{:.2f}'.format(ut).rstrip('0').rstrip('.')"/></t><t t-if="ut == 0"></t></td>
+														<td style="width: 5%; border: 1px solid black;"><t t-set="absent" t-value="round(dtr.absent, 2)"/><t t-if="absent != 0"><t t-esc="'{:.2f}'.format(absent).rstrip('0').rstrip('.')"/></t><t t-if="absent == 0"></t></td>
+														<td style="width: 20%; border: 1px solid black;"><span t-field="dtr.remarks"/></td>
+													</tr>
+												</t>
+												<tr style="text-align: center; font-size: 12px; background-color:#ffffc2;">
+													<td colspan="2" style="padding: 5px; font-size: 12px; text-align: left; background-color: white; white-space: pre;">Workdays:    <t t-set="round_work_days" t-value="round(line.total_regular_hours / 9, 2)"/><t t-if="round_work_days != 0"><t t-esc="'{:.2f}'.format(round_work_days).rstrip('0').rstrip('.')"/>  d</t><t t-if="round_work_days == 0"></t></td>
+													<td style="text-align: center; border: 1px solid black; padding: 2px">Total:</td>
+													<td style="border: 1px solid #000;"><t t-set="round_hours" t-value="round(line.total_regular_hours, 2)"/><t t-if="round_hours != 0"><t t-esc="'{:.2f}'.format(round_hours).rstrip('0').rstrip('.')"/> h</t><t t-if="round_hours == 0"></t></td>
+													<td style="border: 1px solid #000;"><t t-set="round_ot" t-value="round(line.total_overtime_hours, 2)"/><t t-if="round_ot != 0"><t t-esc="'{:.2f}'.format(round_ot).rstrip('0').rstrip('.')"/> h</t><t t-if="round_ot == 0"></t></td>
+													<td style="border: 1px solid #000;"><t t-set="round_late" t-value="round(line.total_late_hours, 2)"/><t t-if="round_late != 0"><t t-esc="'{:.2f}'.format(round_late).rstrip('0').rstrip('.')"/></t><t t-if="round_late == 0"></t></td>
+													<td style="border: 1px solid #000;"><t t-set="round_offset" t-value="round(line.total_offset_hours, 2)"/><t t-if="round_offset != 0">hrs<t t-esc="'{:.2f}'.format(round_offset).rstrip('0').rstrip('.')"/> h</t><t t-if="round_offset == 0"></t></td>
+													<td style="border: 1px solid #000;"><t t-set="round_vl" t-value="round(line.total_vacation_leave_hours, 2)"/><t t-if="round_vl != 0"><t t-esc="'{:.2f}'.format(round_vl).rstrip('0').rstrip('.')"/></t><t t-if="round_vl == 0"></t></td>
+													<td style="border: 1px solid #000;"><t t-set="round_sl" t-value="round(line.total_sick_leave_hours, 2)"/><t t-if="round_sl != 0"><t t-esc="'{:.2f}'.format(round_sl).rstrip('0').rstrip('.')"/></t><t t-if="round_sl == 0"></t></td>
+													<td style="border: 1px solid #000;"><t t-set="round_bl" t-value="round(line.bday_leave, 2)"/><t t-if="round_bl != 0"><t t-esc="'{:.2f}'.format(round_bl).rstrip('0').rstrip('.')"/></t><t t-if="round_bl == 0"></t></td>
+													<td style="border: 1px solid #000;"><t t-set="round_lwp" t-value="round(line.total_leave_w_o_pay_hours, 2)"/><t t-if="round_lwp != 0"><t t-esc="'{:.2f}'.format(round_lwp).rstrip('0').rstrip('.')"/></t><t t-if="round_lwp == 0"></t></td>
+													<td style="border: 1px solid #000;"><t t-set="round_ut" t-value="round(line.total_undertime_hours, 2)"/><t t-if="round_ut != 0"><t t-esc="'{:.2f}'.format(round_ut).rstrip('0').rstrip('.')"/></t><t t-if="round_ut == 0"></t></td>
+													<td style="border: 1px solid #000;"><t t-set="round_absent" t-value="round(line.total_absent_hours, 2)"/><t t-if="round_absent != 0"><t t-esc="'{:.2f}'.format(round_absent).rstrip('0').rstrip('.')"/></t><t t-if="round_absent == 0"></t></td>
+												</tr>
+											</tbody>
+										</table>
+									</t>
+                                </t>
+                            </t>
+                        </div>
+                        <table style="margin-top: 50px;">
+							<tr>
+								<td colspan="2"><strong>Total Employee:</strong></td>
+								<td style="padding-left: 10px;"><t t-esc="employee_count"/></td>
+							</tr>
+						</table>
+					
+						<table style="margin-top: 120px; width: 100%;">
+							<tr>
+								<td style="text-align: center; border-top: 1px solid #000; width: 20%;">Department Head / Date</td>
+								<td style="width: 6%;"></td>
+								<td style="text-align: center; border-top: 1px solid #000; width: 20%;">Checked By / Date</td>
+								<td style="width: 6%;"></td>
+								<td style="text-align: center; border-top: 1px solid #000; width: 20%;">Verified By / Date</td>
+								<td style="width: 6%;"></td>
+								<td style="text-align: center; border-top: 1px solid #000; width: 20%;">Approved by / Date</td>
+							</tr>
+						</table>
+                    </div>
+                    <div class="footer" style="height: 90px; border: 1px solid white;">
+						<table style="width:100%; font-size:14px; margin-top: 60px;">
+							<tr>
+								<td style="width:33%;">
+									<small>
+										<span>MEC Payroll and Attendance</span>
+									</small>
+								</td>
+								<td style="text-align:center; width:33%;">
+									<small>
+										<span>Page </span><span class="page"/> of <span class="topage"/>
+									</small>
+								</td>
+								<td style="text-align:right; width:33%;">
+									<small>
+										<span>Report Date:  </span><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%b %d,  %Y')"/>   
+									</small>
+								</td>
+							</tr>
+						</table>
+					</div>
+                </t>
+            </t>
+
+        </t>
+    </template>
+</odoo>

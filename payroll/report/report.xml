@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_attendance_department_report" model="ir.actions.report">
+        <field name="name">Department Timelog Report</field>
+        <field name="model">attendance.department</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">payroll.attendance_department_report</field>
+        <field name="report_file">payroll.attendance_department_report</field>
+        <field name="binding_model_id" ref="model_attendance_department" />
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="payroll.letter_portrait"/>
+    </record>
+
+    <record id="action_payroll_report" model="ir.actions.report">
+		<field name="name">Paycode Summary Report</field>
+		<field name="model">base.payroll</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">payroll.payroll_dtr_report</field>
+		<field name="report_file">payroll.payroll_dtr_report</field>
+		<field name="binding_type">report</field>
+        <field name="binding_model_id" ref="model_base_payroll" />
+        <field name="paperformat_id" ref="payroll.letter_portrait"/>
+	</record>
+    
+    <record id="action_summary_late_report" model="ir.actions.report">
+        <field name="name">Summary Late Report</field>
+        <field name="model">late.data.summary</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">payroll.late_summary_report</field>
+        <field name="report_file">payroll.late_summary_report</field>
+        <field name="binding_model_id" ref="model_late_data_summary"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="payroll.letter_landscape"/>
+    </record>
+</odoo>

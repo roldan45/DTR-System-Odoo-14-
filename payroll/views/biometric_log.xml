@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- membership -->
+    <!-- Tree membership -->
+    <record id="tree_bio_logs" model="ir.ui.view">
+        <field name="name">tree_bio_logs</field>
+        <field name="model">bio.raw.logs</field>
+        <field name="arch" type="xml">
+            <tree string="biologs" sample="1">
+                <field name="name" />
+                <field name="employee_bio_id" />
+                <field name="raw_timelogs" />
+                <field name="in_morning" />
+                <field name="out_morning" />
+                <field name="in_afternoon" />
+                <field name="out_afternoon" />
+            </tree>
+        </field>
+    </record>
+    <!-- Form membership -->
+    <record id="form_bio_logs" model="ir.ui.view">
+        <field name="name">form_bio_logs</field>
+        <field name="model">bio.raw.logs</field>
+        <field name="arch" type="xml">
+            <form string="bio" sample="1">
+                <header>
+                    <button name="delete_all_records" string="Delete All Records" type="object" class="btn-danger"/>
+                  </header>
+                <sheet>
+                    <group string="Bio Information">
+                        <group>
+                            <field name="name" />
+                            <field name="employee_bio_id" />
+                            <field name="raw_timelogs" />
+                            <field name="in_morning" />
+                            <field name="out_morning" />
+                            <field name="in_afternoon" />
+                            <field name="out_afternoon" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Search membership -->
+    <record id="search_bio_logs" model="ir.ui.view">
+        <field name="name">search_bio_logs</field>
+        <field name="model">bio.raw.logs</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="employee_bio_id" />
+                <field name="raw_timelogs" />
+                <field name="in_morning" />
+                <field name="out_morning" />
+                <field name="in_afternoon" />
+                <field name="out_afternoon" />
+                <searchpanel>
+                    <field name="name" />
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+    <!-- Action membership -->
+    <record id="action_bio_logs" model="ir.actions.act_window">
+        <field name="name">action_bio_logs</field>
+        <field name="res_model">bio.raw.logs</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="search_bio_logs" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No Data found. Let's create one!</p>
+            <p>Please call your Helpdesk Administrator for updates.</p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<!-- Tree Bio Logs -->
+	<record id="tree_attendance_employee_data" model="ir.ui.view">
+		<field name="name">tree_attendance_employee_data</field>
+		<field name="model">attendance.employee.data</field>
+		<field name="arch" type="xml">
+
+			<tree string="Bio Logs"  default_order="name asc">
+				<field name="name"/>
+				<!-- <field name="discrepancy_id"/>
+				<field name="dtr_line_id" />
+				<field name="att_summary_id" />
+				<field name="absent_id" /> -->
+				<field name="att_date"/>
+				<field name="time_in"/>
+				<field name="time_out"/>
+				<field name="total_hours"/>
+				<field name="late_tardiness"/>
+				<field name="undertime"/>
+				<field name="vacation_leave"/>
+				<field name="sick_leave"/>
+				<field name="leave_wo_pay"/>
+				<field name="ot_hours"/>
+				<field name="offset_hours"/>
+				<field name="absent"/>
+				<!-- <field name="remarks"/> -->
+				<!-- <field name="paycode_id"/> -->
+				<!-- <field name="discrepancy_status" decoration-danger="discrepancy_status == 'false_punch' or discrepancy_status == 'absent'"
+														decoration-warning="discrepancy_status == 'undertime' or discrepancy_status == 'halfday'"
+														decoration-info="discrepancy_status == 'overtime'" widget="badge"/> -->
+				<!-- <field name="tag_id"/> -->
+				<!-- <field name="is_verified" widget="boolean_toggle"/> -->
+			</tree>
+		</field>
+	</record>
+
+	<!-- Form DTR Department -->
+	<record id="form_attendance_employee_data" model="ir.ui.view">
+		<field name="name">form_attendance_employee_data</field>
+		<field name="model">attendance.employee.data</field>
+		<field name="arch" type="xml">
+			<form sample="1">
+				<sheet>
+					<h1>
+						<field name="name"/>
+					</h1>
+					<group>
+						<group>
+							<field name="att_date"/>
+							<field name="time_in"/>
+							<field name="time_out"/>
+							<field name="total_hours"/>
+							<field name="late_tardiness"/>
+							<field name="undertime"/>
+							<field name="leave_wo_pay"/>
+							<field name="ot_hours"/>
+							<field name="offset_hours"/>
+							<field name="absent"/>
+						</group>
+						<group>
+							<field name="vacation_leave"/>
+							<field name="sick_leave"/>
+							<field name="bday_leave"/>
+							<field name="remarks"/>
+						</group>
+					</group>
+					<group>
+						<field name="discrepancy_status" decoration-danger="discrepancy_status == 'false_punch' or discrepancy_status == 'absent'"
+														decoration-warning="discrepancy_status == 'undertime' or discrepancy_status == 'halfday'"
+														decoration-info="discrepancy_status == 'overtime'" widget="badge"/>
+						<field name="tag_id"/>
+						<field name="is_verified" widget="boolean_toggle"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<!-- Search Employee -->
+	<record id="search_attendance_employee_data" model="ir.ui.view">
+		<field name="name">search_attendance_employee_data</field>
+		<field name="model">attendance.employee.data</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name" />
+			</search>
+		</field>
+	</record>
+
+	<!-- Action Biometrics -->
+	<record id='action_attendance_employee_data' model='ir.actions.act_window'>
+		<field name="name">action_attendance_employee_data</field>
+		<field name="res_model">attendance.employee.data</field>
+		<field name="view_mode">tree,form</field>
+		<field name="search_view_id" ref="search_attendance_employee_data" />
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				No Data found. Let's create one!
+			</p>
+			<p>
+				Please call your Helpdesk Administrator for updates.
+			</p>
+		</field>
+	</record>
+</odoo>

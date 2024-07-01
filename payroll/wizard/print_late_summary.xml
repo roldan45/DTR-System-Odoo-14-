@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="form_print_late_summary" model="ir.ui.view">
+        <field name="name">form_print_late_summary</field>
+        <field name="model">print.latesummary</field>
+        <field name="arch" type="xml">
+            <form string="Print Late Summary">
+                <group>
+                    <field name="name"/>
+                </group>
+                <footer>
+                    <button name="print" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_late_summary" model="ir.actions.act_window">
+        <field name="name">action_print_late_summary</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">print.latesummary</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="form_print_late_summary"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

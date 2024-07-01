@@ -1,0 +1,108 @@
+                                      [Start]
+                                        |
+                                        V
+                           [Employee Management Process]
+                                        |
+          +--------------------- Create Employee Record ---------------------+
+          |                         |                                     |
+          V                         V                                     V
+   [Employee Information]   [Employee Contracts]                 [Employee Documents]
+   - Employee ID            - Contract ID                        - Document ID
+   - First Name             - Employee ID                        - Employee ID
+   - Last Name              - Contract Type                      - Document Type
+   - Position               - Start Date                         - Document Name
+   - Department             - End Date                           - Document File
+   - Email                  - Salary
+   - Phone Number           - Working Hours
+   - Address                - Contract Terms
+   - Date of Birth          - Benefits
+   - Gender                 - Emergency Contact Information
+   - Nationality            - Bank Account Information
+   - Civil Status
+   - Date of Hire
+   - Employment Status
+   - Employment Type
+   - Supervisor ID
+   - Office Location
+   - Social Security Number
+   - Tax ID
+   - Employment History
+          |                         |                                     |
+          +-------------------------+-------------------------------------+
+                                        |
+                                        V
+                             [Attendance Management Process]
+                                        |
+          +---------------------- Track Employee Attendance ---------------------+
+          |                         |                                        |
+          V                         V                                        V
+       [Attendance Records]   [Attendance Configuration]               [Biometric Devices]
+   - Attendance Record ID     - Configuration ID                      - Device ID
+   - Employee ID              - Working Hours                         - Device Name
+   - Date                     - Break Hours                           - Device Type
+   - Check In Time            - Overtime Rules                        - Device IP Address
+   - Check Out Time           - Undertime Rules                       - Device Port
+   - Attendance Status        - Absenteeism Policy                    - Device Status
+   - Leave Type               - Late Arrival Policy                   - Device Logs
+   - Approval Status          - Early Departure Policy
+          |                         |                                        |
+          +-------------------------+----------------------------------------+
+                                        |
+                                        V
+                            [Leave Management Process]
+                                        |
+              +---------------------- Manage Employee Leaves ---------------------+
+              |                         |                                        |
+              V                         V                                        V
+          [Leave Requests]         [Leave Types]                       [Leave Allocation]
+   - Leave Request ID           - Leave Type ID                        - Allocation ID
+   - Employee ID                - Leave Type Name                      - Employee ID
+   - Start Date                 - Leave Allocation                     - Leave Type ID
+   - End Date                   - Allowance                            - Start Date
+   - Leave Type                 - Maximum Allowance                    - End Date
+   - Approval Status            - Approval Required                    - Leave Days
+   - Leave Reason               - Deduct From Leave Entitlement        - Remaining Days
+              |                         |                                        |
+              +-------------------------+----------------------------------------+
+                                        |
+                                        V
+                           [Payroll Management Process]
+                                        |
+                    +--------------- Calculate Payroll ------------------+
+                    |                       |                            |
+                    V                       V                            V
+            [Payroll Records]       [Salary Structures]            [Deduction Rules]
+   - Payroll Record ID           - Structure ID                    - Deduction Rule ID
+   - Employee ID                 - Salary Component                - Employee Category
+   - Pay Period                  - Amount                          - Deduction Type
+   - Gross Salary                - Deduction Rules                 - Deduction Amount
+   - Net Salary                  - Structure Type                  - Max Amount
+   - Tax                         - Calculation Method              - Frequency
+   - Social Security             - Category
+   - Other Deductions            - Employee Category
+                    |                       |                            |
+                    +-----------------------+----------------------------+
+                                        |
+                                        V
+                        [Timesheet Management Process]
+                                        |
+                   +--------------- Track Timesheets ---------------+
+                   |                       |                       |
+                   V                       V                       V
+               [Timesheets]         [Project Information]      [Task Information]
+   - Timesheet ID             - Project ID                 - Task ID
+   - Employee ID              - Project Name               - Task Name
+   - Date                     - Project Description        - Task Description
+   - Hours                    - Project Manager            - Task Manager
+   - Description              - Project Start Date         - Task Start Date
+   - Approved Status          - Project End Date           - Task End Date
+                   |                       |                       |
+                   +-----------------------+-----------------------+
+                                        |
+                                        V
+                          [Reporting and Analytics Process]
+                                        |
+                           +------------ Generate Reports ------------+
+                           |                    |                     |
+                           V                    V                     V
+                   [Attendance Reports] [Payroll Reports] [Timesheet Reports]

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Department -->
+
+    <record id="tree_pay_department" model="ir.ui.view">
+        <field name="name">tree_pay_department</field>
+        <field name="model">pay.department</field>
+        <field name="arch" type="xml">
+            <tree string="Department" sample="1">
+                <field name="name"  required="1" />
+                <field name="department_manager"/>
+                
+            </tree>
+        </field>
+    </record>
+
+    <record id="search_pay_department" model="ir.ui.view">
+        <field name="name">search_pay_department</field>
+        <field name="model">pay.department</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="form_pay_department" model="ir.ui.view">
+        <field name="name">form_pay_department</field>
+        <field name="model">pay.department</field>
+        <field name="arch" type="xml">
+            <form>
+                
+                <sheet>
+                    <group>
+                        <button id="button_create_position" name="%(payroll.action_create_position_wizard)d"
+                        string="Create Position" class="btn-primary"
+                        type="action"/>
+                    </group>
+                    <group col="4">
+                        <field name="name" placeholder="e.g. IT Department" required="1" />
+                        <field name="department_manager"/>
+                    </group>
+                    <group>
+                        <field name="position_ids">
+                            <tree>
+                                <field name="name"/>
+                            </tree>
+                        </field>
+
+                </group>
+                    
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pay_department" model="ir.actions.act_window">
+        <field name="name">action_pay_department</field>
+        <field name="res_model">pay.department</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="search_pay_department" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No data found. Let's create one!</p>
+            <p>Please call your Helpdesk Administrator for updates.</p>
+        </field>
+    </record>
+
+    
+    <!-- Project -->
+    <record id="tree_pay_project" model="ir.ui.view">
+        <field name="name">tree_pay_project</field>
+        <field name="model">pay.project</field>
+        <field name="arch" type="xml">
+            <tree string="Project" sample="1">
+                <field name="name" required="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="form_pay_project" model="ir.ui.view">
+        <field name="name">form_pay_project</field>
+        <field name="model">pay.project</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="name"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="search_pay_project" model="ir.ui.view">
+        <field name="name">search_pay_project</field>
+        <field name="model">pay.project</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pay_project" model="ir.actions.act_window">
+        <field name="name">action_pay_project</field>
+        <field name="res_model">pay.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="search_pay_project" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No data found. Let's create one!</p>
+            <p>Please call your Helpdesk Administrator for updates.</p>
+        </field>
+    </record>
+
+    <!-- tree_pay_position -->
+    <record id="tree_pay_position" model="ir.ui.view">
+        <field name="name">tree_pay_position</field>
+        <field name="model">pay.position</field>
+        <field name="arch" type="xml">
+            <tree string="Project" sample="1">
+                <field name="name"/>
+                <field name="department_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="form_pay_position" model="ir.ui.view">
+        <field name="name">form_pay_position</field>
+        <field name="model">pay.position</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Sales Manager"/></h1>
+                    </div>
+                    <div>
+                        <label for="department_id" class="oe_edit_only"/>
+                        <h2><field name="department_id" placeholder="e.g. It Department"/></h2>
+                    </div>
+                    <div>
+                        <group string="Job Description">
+                            <div>
+                                <label for="job_description"/>
+                                <field name="job_description"/>
+                            </div>
+                        </group>
+                    </div>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="search_pay_position" model="ir.ui.view">
+        <field name="name">search_pay_position</field>
+        <field name="model">pay.position</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="department_id"/>
+                <field name="name"/>
+            </search>
+
+        </field>
+    </record>
+
+    <record id="action_pay_position" model="ir.actions.act_window">
+        <field name="name">action_pay_position</field>
+        <field name="res_model">pay.position</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="search_pay_position" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No data found. Let's create one!</p>
+            <p>Please call your Helpdesk Administrator for updates.</p>
+        </field>
+    </record>
+
+</odoo>

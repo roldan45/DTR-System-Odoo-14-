@@ -1,0 +1,57 @@
+<odoo>
+    <data>
+		
+        <record id="tree_events" model="ir.ui.view">
+            <field name="name">tree_events</field>
+            <field name="model">events</field>
+            <field name="arch" type="xml">
+                <tree sample="1">
+                    <field name="name"/>
+                    <field name="event_date"/>
+                    <field name="type_id"/>
+                    <field name="is_nonworking"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="form_events" model="ir.ui.view">
+            <field name="name">form_events</field>
+            <field name="model">events</field>
+            <field name="arch" type="xml">
+                <form sample="1">
+                    <sheet>
+						<group>
+							<field name="name"/>
+						</group>
+                        <group>
+                            <field name="event_date"/>
+                            <field name="type_id"/>
+                            <field name="is_nonworking"/>
+						</group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="search_events" model="ir.ui.view">
+            <field name="name">search_events</field>
+            <field name="model">events</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_events" model="ir.actions.act_window">
+            <field name="name">action_events</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">events</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="search_events"/>
+        </record>
+
+    </data>
+</odoo>
